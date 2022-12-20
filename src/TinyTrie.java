@@ -1,21 +1,43 @@
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class TinyTrie {
+     class Node {
+
+        protected Character c;
+        protected boolean eow;
+        protected HashMap<Character, Node> nextChars;
+
+        Node(Character c) {
+            c = c;
+            nextChars = new HashMap<>();
+        }
+    }
     Node root;
 
     public TinyTrie() {
         root = new Node(null);
     }
 
-    class Node {
+    public void add(String s) {
 
-        protected char c;
-        protected boolean eow;
-        protected HashSet<Character> nextChars;
+        Node curr = this.root;
+        for (int i = 0, n = s.length(); i < n; i++) {
 
-        Node(Character c) {
-            c = c;
-            nextChars = new HashSet<>();
+            char c = s.charAt(i);
+
+            // if char already present in trie
+            if (curr.nextChars.keySet().contains(c)) {
+                curr = curr.nextChars.get(c);
+            } else {
+                Node node = new Node(c);
+                curr.nextChars.put(c, node);
+            }
         }
+
+        curr.eow = true;
     }
+
+
+
 }
